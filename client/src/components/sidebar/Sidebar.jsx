@@ -10,10 +10,29 @@ import {
   Event,
   School,
 } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 import { Users } from "../../dummyData";
 import CloseFriend from "../closeFriend/CloseFriend";
-
+import { useContext , useEffect,useState} from "react";
+import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
 export default function Sidebar() {
+  const [posts, setPosts] = useState([]);
+    useEffect(() => {
+      const fetchPosts = async () => {
+        const res =  await axios.get("http://localhost:8800/alluser");
+        
+        setPosts(
+          res.data.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          })
+        );
+      };
+      fetchPosts();
+    }, []);
+  
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+const { user } = useContext(AuthContext);
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -58,9 +77,10 @@ export default function Sidebar() {
         <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          {Users.map((u) => (
+          {posts.map((u) => (
             <CloseFriend key={u.id} user={u} />
           ))}
+         
         </ul>
       </div>
     </div>

@@ -18,17 +18,20 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/">
-          { <Register />}
+          {user ? <Home/>: <Register />}
         </Route>
         <Route path="/login">{ <Login />}</Route>
         <Route path="/register">
-          {  <Register />}
+          {user ? <Redirect to="/" /> :  <Register />}
         </Route>
         <Route path="/messenger">
           {!user ? <Redirect to="/" /> : <Messenger />}
         </Route>
         <Route path="/profile/:username">
           <Profile />
+        </Route>
+        <Route path="/logout">
+        { <Register />}
         </Route>
       </Switch>
     </Router>

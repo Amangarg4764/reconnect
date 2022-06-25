@@ -12,9 +12,9 @@ const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
 const router = express.Router();
 const path = require("path");
-
+const Post = require("./models/Post");
 dotenv.config();
-
+const User = require("./models/User");
 mongoose.connect("mongodb://localhost:27017/reconect");
 const db=mongoose.connection;
 db.on("error",console.error.bind(console,"error in database"));
@@ -46,12 +46,34 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
     console.error(error);
   }
 });
-
+app.use(function(req,res,next){
+  res.header("Access-Control-Allow-Origin","*");
+  res.header("Access-Control-Allow-Headers","Origin, X-Requested-With,Content-Type,Accept");
+  next();
+});
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
+app.get("/allpost",async function(req,res){
+  try {
+  let posts = await Post.find({});
+  res.status(200).json(posts);
+  console.log(posts);
+} catch (err) {
+  res.status(500).json(err);
+}
+});
+app.get('/alluser',async function(req,res){
+  try {
+    let posts = await User.find({});
+    res.status(200).json(posts);
+    console.log(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 app.listen(8800, () => {
   console.log("Backend server is running!");

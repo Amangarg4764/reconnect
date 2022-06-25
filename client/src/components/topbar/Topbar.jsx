@@ -3,9 +3,17 @@ import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
+import {useReducer } from 'react';
+import Reducers from '../../context/AuthReducer';
 export default function Topbar() {
+  
+ 
   const { user } = useContext(AuthContext);
+  const [state, dispatch] = useReducer(Reducers, {
+    user:user,
+    isFetching: false,
+    error: false,
+  });
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">
@@ -28,7 +36,6 @@ export default function Topbar() {
         <Link to="/" style={{ textDecoration: "none" }}>
           <span className="topbarLink" style={{color:"white"}}>Homepage</span>
           </Link>
-
           <span className="topbarLink">Timeline</span>
         </div>
         <div className="topbarIcons">
@@ -46,6 +53,15 @@ export default function Topbar() {
             <Notifications />
             <span className="topbarIconBadge">1</span>
           </div>
+          <div className="topbarLinks">
+            <Link to="/logout" style={{ textDecoration: "none" }}>
+              <span className="topbarLink" style={{color:"white"}} onClick={()=>{
+                dispatch({type:"LOGIN_START"});
+                state.user=null;
+                console.log(user);
+              }}>Logout</span>
+            </Link>
+        </div>
         </div>
         <Link to={`/profile/${user.username}`}>
           <img

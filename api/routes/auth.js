@@ -3,7 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 //REGISTER
-router.post("/register", async (req, res) => {
+router.post("/register", async function(req, res)  {
   try {
     //generate new password
     const salt = await bcrypt.genSalt(10);
@@ -20,7 +20,7 @@ router.post("/register", async (req, res) => {
     const user = await newUser.save();
     res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err);
   }
 });
 
