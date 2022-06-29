@@ -1,7 +1,7 @@
 import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState ,useRef} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -64,7 +64,27 @@ export default function Rightbar({ user }) {
       </>
     );
   };
+  
+  const city=useRef();
+  const place=useRef();
+  const relation=useRef();
+  const handleClick2 = async (e) => {
 
+   
+      const task = {
+        city: city.current.value,
+        place: place.current.value,
+        relation: relation.current.value,
+      };
+      try {
+        await axios.post(`http://localhost:8800/updateuser/?id=${user._id}`, task);
+       
+      } catch (err) {
+        console.log(err);
+      }
+    
+  };
+  
   const ProfileRightbar = () => {
     return (
       <>
@@ -75,6 +95,7 @@ export default function Rightbar({ user }) {
           </button>
         )}
         <h4 className="rightbarTitle">User information</h4>
+        <div id="hide">
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">City:</span>
@@ -87,14 +108,31 @@ export default function Rightbar({ user }) {
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Relationship:</span>
             <span className="rightbarInfoValue">
-              {user.relationship === 1
-                ? "Single"
-                : user.relationship === 1
-                ? "Married"
-                : "-"}
+              {user.relationship}
             </span>
           </div>
+         
+          </div> 
+          {user.username === currentUser.username && (
+          <form  id="shows" >
+              <div className="rightbarInfoItem">
+                <span className="rightbarInfoKey">City:</span>
+                <span className="rightbarInfoValue"><input type="text" name="city"   ref={city} defaultValue={user.city}/></span>
+              </div>
+              <div className="rightbarInfoItem">
+                <span className="rightbarInfoKey">From:</span>
+                <span className="rightbarInfoValue"><input type="text" name="from"  ref={place}  defaultValue={user.from}/></span>
+              </div>
+              <div className="rightbarInfoItem">
+                <span className="rightbarInfoKey">Relationship:</span>
+                <span className="rightbarInfoValue">
+                <input type="text" name="relation"   ref={relation} defaultValue={user.relationship}/>
+                </span>
+              </div>
+              <div className="rightbarInfoItem"><button onClick={handleClick2}>Save</button></div>
+          </form>)}
         </div>
+        
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
           {friends.map((friend) => (

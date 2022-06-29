@@ -22,7 +22,7 @@ function App() {
         </Route>
         <Route path="/login">{ <Login />}</Route>
         <Route path="/register">
-          {user ? <Redirect to="/" /> :  <Register />}
+          { <Register />}
         </Route>
         <Route path="/messenger">
           {!user ? <Redirect to="/" /> : <Messenger />}
@@ -31,7 +31,7 @@ function App() {
           <Profile />
         </Route>
         <Route path="/logout">
-        { <Register />}
+        { <Redirect to="/login" /> }
         </Route>
       </Switch>
     </Router>

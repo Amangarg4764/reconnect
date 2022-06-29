@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRef } from "react";
 import "./register.css";
 import { useHistory } from "react-router";
-
+import { Link } from "react-router-dom";
 export default function Register() {
   const username = useRef();
   const email = useRef();
@@ -39,40 +39,49 @@ export default function Register() {
           </span>
         </div>
         <div className="loginRight">
-          <form className="loginBox" onSubmit={handleClick}>
-            <input
-              placeholder="Username"
-              required
-              ref={username}
-              className="loginInput"
-            />
-            <input
-              placeholder="Email"
-              required
-              ref={email}
-              className="loginInput"
-              type="email"
-            />
-            <input
-              placeholder="Password"
-              required
-              ref={password}
-              className="loginInput"
-              type="password"
-              minLength="6"
-            />
-            <input
-              placeholder="Password Again"
-              required
-              ref={passwordAgain}
-              className="loginInput"
-              type="password"
-            />
-            <button className="loginButton" type="submit">
-              Sign Up
-            </button>
+        <div className="loginBox">
+          <div>
+            <form  className="loginBox1" onSubmit={handleClick}>
+              <input
+                placeholder="Username"
+                required
+                ref={username}
+                className="loginInput"
+              />
+              <input
+                placeholder="Email"
+                required
+                ref={email}
+                className="loginInput"
+                type="email"
+              />
+              <input
+                placeholder="Password"
+                required
+                ref={password}
+                className="loginInput"
+                type="password"
+                minLength="6"
+              />
+              <input
+                placeholder="Password Again"
+                required
+                ref={passwordAgain}
+                className="loginInput"
+                type="password"
+              />
+              <button className="loginButton" type="submit">
+                Sign Up
+              </button>
+              
+            </form>
+          </div>
+          <div>
+          <Link to="/login" style={{ textDecoration: "none" }}>
             <button className="loginRegisterButton">Log into Account</button>
-          </form>
+            </Link>
+          </div>
+        </div>
         </div>
       </div>
     </div>

@@ -69,11 +69,24 @@ app.get('/alluser',async function(req,res){
   try {
     let posts = await User.find({});
     res.status(200).json(posts);
-    console.log(posts);
+    //console.log(posts);
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
+
+app.post('/updateuser',async function(req,res){
+  try {
+    console.log(req.body,req.query.id);
+    await User.findByIdAndUpdate(req.query.id,{
+      city:req.body.city,from:req.body.place, relationship:req.body.relation
+    });
+    
+    return res.redirect('back');
+  } catch (err) {
+    return res.redirect('back');
+  }
+});
 
 app.listen(8800, () => {
   console.log("Backend server is running!");
