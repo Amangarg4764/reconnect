@@ -2,17 +2,17 @@ export const Users = [
   {
     id:1,
     profilePicture: "person/1.jpeg",
-    username: "Safak Kocaoglu",
+    username: "Alice",
   },
   {
     id:2,
     profilePicture: "person/2.jpeg",
-    username: "Janell Shrum",
+    username: "David",
   },
   {
     id:3,
     profilePicture: "person/3.jpeg",
-    username: "Alex Durden",
+    username: "Alex",
   },
   {
     id:4,
@@ -22,12 +22,12 @@ export const Users = [
   {
     id:5,
     profilePicture: "person/5.jpeg",
-    username: "Thomas Holden",
+    username: "Jennifer",
   },
   {
     id:6,
     profilePicture: "person/6.jpeg",
-    username: "Shirley Beauchamp",
+    username: "Shirley",
   },
   {
     id:7,
